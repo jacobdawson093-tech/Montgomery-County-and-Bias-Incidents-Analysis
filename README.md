@@ -12,7 +12,7 @@ A statistical analysis using models and EDA based on the MCPD Bias incident data
 
 ## Project Structure
 **ALL DATA IS EXTRACTED VIA API DATA INGESTION IN COLAB NOTEBOOKS**
-**eda/**: Exploratory Data Analysis mostly including graphs and simple analysis in documents
-**analysis/**: Preparing for models and hypothesis testing. Documentation on found results
-**models/**: Includes Logistc Regrression, Poisson Regression, Linear Regression, Chi-Square testing, and more. Findings are in documentation. 
-**reports/**: Summary of key findings and results. 
+  * **eda/**: Exploratory Data Analysis mostly including graphs and simple analysis in documents
+  * **analysis/**: Preparing for models and hypothesis testing. Documentation on found results
+  * **models/**: Includes Logistc Regrression, Poisson Regression, Linear Regression, Chi-Square testing, and more. Findings are in documentation. 
+  * **reports/**: Summary of key findings and results. 
