@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from statsmodels.stats.proportion import proportions_ztest
 url = "https://api.census.gov/data/2024/acs/acs5"
 response = requests.get(url)
 data = response.json()
