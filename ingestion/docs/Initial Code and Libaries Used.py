@@ -9,4 +9,7 @@ data = response.json()
 url2 = "https://data.montgomerycountymd.gov/api/v3/views/7bhj-887p/query.json?app_token=8kUbrmGzgoxqe4z7C91iV3wmC"
 response2 = requests.get(url2)
 data2 = response2.json()
-df_bias = pd.DataFrame(data2)
+
+df1 = pd.DataFrame(data)
+
+df2 = pd.DataFrame(data2)
