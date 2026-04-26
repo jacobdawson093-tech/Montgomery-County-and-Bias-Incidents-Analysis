@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from statsmodels.stats.proportion import proportions_ztest
+from scipy.stats import chi2_contingency
 url = "https://api.census.gov/data/2024/acs/acs5"
 response = requests.get(url)
 data = response.json()
@@ -14,3 +15,4 @@ data2 = response2.json()
 df1 = pd.DataFrame(data)
 
 df2 = pd.DataFrame(data2)
+df2.head()
