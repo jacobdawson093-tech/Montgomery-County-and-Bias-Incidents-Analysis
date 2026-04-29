@@ -1,7 +1,7 @@
 **The following is using the MCPD Bias Incident data set from years 2016-2026. What is displayed is summary statistics as of April of 2026. Future data will be added and these summary statistics therefore will not be the same.**
-**To see the up to date statistics, go to notebooks and EDA to see most up to date information using API link.**
+**To see the up to date statistics, go to notebooks and 'EDA.ipynb' to see most up to date information using API link.**
 
-**Furthermore, EDA is using raw data of only the MCPD Bias Incidents dataset using up to date API link, ingestion steps are not used.**
+**Furthermore, EDA is using raw data of only the MCPD Bias Incidents dataset using up to date API link, ingestion steps are *not* used.**
 
 # Consolidated EDA Statistical Findings
 
