@@ -1,3 +1,5 @@
+The following is summarized findings of tests and analysis, using data from ingestion steps. This information is as of April of 2026, but is subject to change in the future. To see up to date analysis, p-values, Chi2 values, coefficiants, and more; open the notebook and run it yourself which uses the up to date API. 
+
 # Summary of Key Findings and Statistical Tests
 
 This analysis investigated various aspects of bias incidents, their resolution rates, demographic factors, and suspect characteristics.
