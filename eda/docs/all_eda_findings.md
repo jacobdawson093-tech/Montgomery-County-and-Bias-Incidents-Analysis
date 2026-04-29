@@ -1,3 +1,6 @@
+**The following is using the MCPD Bias Incident data set from years 2016-2026. What is displayed is summary statistics as of April of 2026. Future data will be added and these summary statistics therefore will not be the same.**
+**To see the up to date statistics, go to notebooks and EDA to see most up to date information using API link.**
+
 # Consolidated EDA Statistical Findings
 
 ## Status Distribution
