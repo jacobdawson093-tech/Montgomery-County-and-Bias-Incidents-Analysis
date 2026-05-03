@@ -33,31 +33,48 @@ acs_variables = {
 variables_str = ','.join(acs_variables.keys())
 
 all_acs_dfs = []
-# Loop through years from 2016 to 2024 (inclusive) for the ACS 5-year estimates
-for current_year in range(2016, 2025):
+# Loop through years from 2016 up to the current year (to capture the latest available ACS 5-year estimates)
+# ACS 5-year estimates for year Y are typically released in December of year Y+1. So, requesting up to the current year
+# will ensure we get the latest published data without trying to fetch future, unavailable data.
+for current_year in range(2016, datetime.datetime.now().year):
     acs_api_url = f"https://api.census.gov/data/{current_year}/acs/acs5?get=NAME,{variables_str}&for=place:*&in=state:24"
     print(f"Fetching data from: {acs_api_url}")
 
-    response = requests.get(acs_api_url)
-    data = response.json()
+    try:
+        response = requests.get(acs_api_url)
+        response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        data = response.json()
 
-    # The first row contains headers, subsequent rows are data
-    headers = data[0]
-    temp_acs_df = pd.DataFrame(data[1:], columns=headers)
+        # The first row contains headers, subsequent rows are data
+        headers = data[0]
+        temp_acs_df = pd.DataFrame(data[1:], columns=headers)
 
-    # Rename columns for clarity
-    temp_acs_df = temp_acs_df.rename(columns=acs_variables)
+        # Rename columns for clarity
+        temp_acs_df = temp_acs_df.rename(columns=acs_variables)
 
-    # Extract city name from the 'NAME' column
-    temp_acs_df['city'] = temp_acs_df['NAME'].apply(lambda x: x.split(',')[0].replace(' city', '').replace(' CDP', '').strip())
+        # Extract city name from the 'NAME' column
+        temp_acs_df['city'] = temp_acs_df['NAME'].apply(lambda x: x.split(',')[0].replace(' city', '').replace(' CDP', '').strip())
 
-    # Convert demographic columns to numeric, handling potential non-numeric values
-    for col in acs_variables.values():
-        temp_acs_df[col] = pd.to_numeric(temp_acs_df[col], errors='coerce')
+        # Convert demographic columns to numeric, handling potential non-numeric values
+        for col in acs_variables.values():
+            temp_acs_df[col] = pd.to_numeric(temp_acs_df[col], errors='coerce')
 
-    # Add a year column to identify the ACS 5-year estimate
-    temp_acs_df['acs_year_end'] = current_year
-    all_acs_dfs.append(temp_acs_df)
+        # Add a year column to identify the ACS 5-year estimate
+        temp_acs_df['acs_year_end'] = current_year
+        all_acs_dfs.append(temp_acs_df)
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data for {current_year}: {e}")
+        # Print response content if available for more debugging info
+        if response is not None:
+            print(f"Response content: {response.text}")
+        continue # Skip to the next year
+    except json.JSONDecodeError as e:
+        print(f"JSONDecodeError for {current_year}: {e}")
+        # Print response content if available for more debugging info
+        if response is not None:
+            print(f"Response content: {response.text}")
+        continue # Skip to the next year
 
 # Concatenate all ACS dataframes
 acs_df = pd.concat(all_acs_dfs, ignore_index=True)
@@ -67,9 +84,9 @@ acs_df = pd.concat(all_acs_dfs, ignore_index=True)
 # Standardize city names in ACS data to match our district map
 acs_df['city_standardized'] = acs_df['city'].str.replace(' city', '').str.replace(' CDP', '').str.strip()
 
-# Filter df2 for incidents that have a mapped city and are within the ACS data range (up to 2024)
+# Filter df2 for incidents that have a mapped city and are within the ACS data range (up to current year)
 df2_filtered = df2.dropna(subset=['city']).copy()
-df2_filtered = df2_filtered[df2_filtered['incident_date'].dt.year <= 2024]
+df2_filtered = df2_filtered[df2_filtered['incident_date'].dt.year < datetime.datetime.now().year]
 
 # Extract the year from the incident date for merging
 df2_filtered['incident_year'] = df2_filtered['incident_date'].dt.year
