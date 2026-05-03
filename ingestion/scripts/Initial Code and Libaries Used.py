@@ -5,6 +5,19 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from statsmodels.stats.proportion import proportions_ztest
 from scipy.stats import chi2_contingency
+import numpy as np
+import statsmodels.formula.api as smf
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, roc_curve, RocCurveDisplay
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, classification_report, roc_auc_score
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+import datetime
+
 url = "https://api.census.gov/data/2024/acs/acs5"
 response = requests.get(url)
 data = response.json()
