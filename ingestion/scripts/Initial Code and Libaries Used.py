@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from statsmodels.stats.proportion import proportions_ztest
-from scipy.stats import chi2_contingency
+from scipy.stats import chi2_contingency, fisher_exact, pearsonr, f_oneway
 import numpy as np
 import statsmodels.formula.api as smf
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, roc_curve, RocCurveDisplay
@@ -30,4 +30,3 @@ data2 = response2.json()
 df1 = pd.DataFrame(data)
 
 df2 = pd.DataFrame(data2)
-df2.head()
