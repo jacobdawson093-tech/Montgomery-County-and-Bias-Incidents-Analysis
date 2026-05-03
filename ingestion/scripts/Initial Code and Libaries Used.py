@@ -17,6 +17,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 import datetime
+import os
+os.makedirs("graphs", exist_ok=True)
 
 url = "https://api.census.gov/data/2024/acs/acs5"
 response = requests.get(url)
